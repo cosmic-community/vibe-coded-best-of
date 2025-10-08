@@ -9,14 +9,14 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   
   const projectUrls = projects.map((project) => ({
     url: `${baseUrl}/projects/${project.slug}`,
-    lastModified: new Date(project.modified_at),
+    lastModified: new Date(project.metadata?.published_at || project.created_at || new Date().toISOString()),
     changeFrequency: 'monthly' as const,
     priority: 0.8,
   }));
   
   const newsletterUrls = newsletters.map((newsletter) => ({
     url: `${baseUrl}/newsletter/${newsletter.slug}`,
-    lastModified: new Date(newsletter.modified_at),
+    lastModified: new Date(newsletter.metadata?.published_at || newsletter.created_at || new Date().toISOString()),
     changeFrequency: 'monthly' as const,
     priority: 0.7,
   }));
