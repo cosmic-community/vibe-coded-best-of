@@ -28,27 +28,26 @@ export default function SubmitPage() {
               <h3 className="text-2xl font-serif font-bold text-ink mb-6">
                 Submission Tips
               </h3>
-              <ul className="space-y-4 text-ink/80">
-                <li className="flex items-start gap-3">
-                  <span className="text-accent text-xl">•</span>
-                  <span>Be specific about what you shipped and why it matters</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <span className="text-accent text-xl">•</span>
-                  <span>List the tools you used and why you chose them</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <span className="text-accent text-xl">•</span>
-                  <span>Share any interesting prompts or development notes</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <span className="text-accent text-xl">•</span>
-                  <span>Be honest about what worked and what didn't</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <span className="text-accent text-xl">•</span>
-                  <span>Include a live demo or repository link if possible</span>
-                </li>
+                <ul className="space-y-4 text-ink/80">
+                  <li className="flex items-start gap-3">
+                    <span className="text-accent text-xl">•</span>
+                    <span>Upload a clear screenshot or preview image of your project</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <span className="text-accent text-xl">•</span>
+                    <span>Be specific about what you shipped and why it matters</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <span className="text-accent text-xl">•</span>
+                    <span>List the tools you used and why you chose them</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <span className="text-accent text-xl">•</span>
+                    <span>Share any interesting prompts or development notes</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <span className="text-accent text-xl">•</span>
+                    <span>Be honest about what worked and what didn't</span>
               </ul>
               
               <div className="mt-8 pt-8 border-t border-ink/10">
