@@ -45,10 +45,11 @@ export default function SubmitPage() {
                     <span className="text-accent text-xl">•</span>
                     <span>Share any interesting prompts or development notes</span>
                   </li>
-                  <li className="flex items-start gap-3">
-                    <span className="text-accent text-xl">•</span>
-                    <span>Be honest about what worked and what didn't</span>
-              </ul>
+                    <li className="flex items-start gap-3">
+                      <span className="text-accent text-xl">•</span>
+                      <span>Be honest about what worked and what didn't</span>
+                    </li>
+                </ul>
               
               <div className="mt-8 pt-8 border-t border-ink/10">
                 <p className="text-sm text-ink/60">
