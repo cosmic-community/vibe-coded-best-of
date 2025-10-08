@@ -109,6 +109,7 @@ export interface CosmicResponse<T> {
 }
 
 // Form submission types
+// Form submission types
 export interface ProjectSubmissionFormData {
   title: string;
   name: string;
@@ -121,6 +122,7 @@ export interface ProjectSubmissionFormData {
   tips?: string;
   highs?: string;
   lows?: string;
+  screenshot?: File | null;
   tags?: string;
   honeypot?: string;
 }

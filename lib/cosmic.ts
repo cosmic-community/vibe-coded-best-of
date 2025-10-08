@@ -166,6 +166,7 @@ export async function getPendingSubmissions(): Promise<ProjectSubmission[]> {
 }
 
 // Create project submission
+// Create project submission
 export async function createProjectSubmission(data: {
   title: string;
   author_name: string;
@@ -178,11 +179,36 @@ export async function createProjectSubmission(data: {
   tips?: string;
   highs?: string;
   lows?: string;
+  screenshot?: File;
 }): Promise<ProjectSubmission> {
   try {
+    // Upload screenshot to Cosmic media library if provided
+    let thumbnailUrl = '';
+    if (data.screenshot) {
+      const mediaFormData = new FormData();
+      mediaFormData.append('media', data.screenshot);
+      
+      const mediaResponse = await fetch(
+        `https://api.cosmicjs.com/v3/buckets/${process.env.COSMIC_BUCKET_SLUG}/media`,
+        {
+          method: 'POST',
+          headers: {
+            Authorization: `Bearer ${process.env.COSMIC_WRITE_KEY}`,
+          },
+          body: mediaFormData,
+        }
+      );
+      
+      if (mediaResponse.ok) {
+        const mediaData = await mediaResponse.json();
+        thumbnailUrl = mediaData.media?.name || '';
+      }
+    }
+    
     const response = await cosmic.objects.insertOne({
       type: 'project-submissions',
       title: data.title,
+      thumbnail: thumbnailUrl,
       metadata: {
         title: data.title,
         status: 'Pending Review',

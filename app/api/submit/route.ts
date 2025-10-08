@@ -3,30 +3,53 @@ import { createProjectSubmission } from '@/lib/cosmic';
 
 export async function POST(request: NextRequest) {
   try {
-    const body = await request.json();
+    const formData = await request.formData();
+    
+    // Extract form fields
+    const title = formData.get('title') as string;
+    const name = formData.get('name') as string;
+    const email = formData.get('email') as string;
+    const websiteUrl = formData.get('websiteUrl') as string;
+    const repoUrl = formData.get('repoUrl') as string;
+    const description = formData.get('description') as string;
+    const toolsJson = formData.get('tools') as string;
+    const prompts = formData.get('prompts') as string;
+    const tips = formData.get('tips') as string;
+    const highs = formData.get('highs') as string;
+    const lows = formData.get('lows') as string;
+    const honeypot = formData.get('honeypot') as string;
+    const screenshot = formData.get('screenshot') as File | null;
     
     // Honeypot check
-    if (body.honeypot) {
+    if (honeypot) {
       return NextResponse.json(
         { error: 'Spam detected' },
         { status: 400 }
       );
     }
     
+    // Parse tools array
+    let tools: string[] = [];
+    try {
+      tools = JSON.parse(toolsJson);
+    } catch {
+      return NextResponse.json(
+        { error: 'Invalid tools format' },
+        { status: 400 }
+      );
+    }
+    
     // Validate required fields
-    const requiredFields = ['title', 'name', 'email', 'websiteUrl', 'description', 'tools'];
-    for (const field of requiredFields) {
-      if (!body[field] || (Array.isArray(body[field]) && body[field].length === 0)) {
-        return NextResponse.json(
-          { error: `Missing required field: ${field}` },
-          { status: 400 }
-        );
-      }
+    if (!title || !name || !email || !websiteUrl || !description || tools.length === 0 || !screenshot) {
+      return NextResponse.json(
+        { error: 'Missing required fields' },
+        { status: 400 }
+      );
     }
     
     // Validate email format
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(body.email)) {
+    if (!emailRegex.test(email)) {
       return NextResponse.json(
         { error: 'Invalid email address' },
         { status: 400 }
@@ -35,33 +58,34 @@ export async function POST(request: NextRequest) {
     
     // Validate URL format
     const urlRegex = /^https?:\/\/.+/;
-    if (!urlRegex.test(body.websiteUrl)) {
+    if (!urlRegex.test(websiteUrl)) {
       return NextResponse.json(
         { error: 'Invalid website URL' },
         { status: 400 }
       );
     }
     
-    if (body.repoUrl && !urlRegex.test(body.repoUrl)) {
+    if (repoUrl && !urlRegex.test(repoUrl)) {
       return NextResponse.json(
         { error: 'Invalid repository URL' },
         { status: 400 }
       );
     }
     
-    // Create submission
+    // Create submission with screenshot
     await createProjectSubmission({
-      title: body.title,
-      author_name: body.name,
-      author_email: body.email,
-      website_url: body.websiteUrl,
-      repo_url: body.repoUrl,
-      description: body.description,
-      tools_used: body.tools,
-      prompts_or_notes: body.prompts,
-      tips: body.tips,
-      highs: body.highs,
-      lows: body.lows,
+      title,
+      author_name: name,
+      author_email: email,
+      website_url: websiteUrl,
+      repo_url: repoUrl,
+      description,
+      tools_used: tools,
+      prompts_or_notes: prompts,
+      tips,
+      highs,
+      lows,
+      screenshot,
     });
     
     return NextResponse.json(
