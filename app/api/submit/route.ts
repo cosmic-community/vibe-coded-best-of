@@ -42,7 +42,7 @@ export async function POST(request: NextRequest) {
     // Validate required fields
     if (!title || !name || !email || !websiteUrl || !description || tools.length === 0 || !screenshot) {
       return NextResponse.json(
-        { error: 'Missing required fields' },
+        { error: 'Missing required fields. Please ensure you have uploaded a screenshot.' },
         { status: 400 }
       );
     }
