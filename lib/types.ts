@@ -122,7 +122,7 @@ export interface ProjectSubmissionFormData {
   tips?: string;
   highs?: string;
   lows?: string;
-  screenshot?: File | null;
+  screenshot: File | null;
   tags?: string;
   honeypot?: string;
 }
